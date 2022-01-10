@@ -7,24 +7,13 @@ function App() {
 	const [ sponsorName, setSponsorName ] = useState('');
 	const [ year, setYear ] = useState('');
 	const [ season, setSeason ] = useState('');
+	const [ team, setTeam ] = useState('');
 	const [ error, setError ] = useState(false);
 	const [ message, setMessage ] = useState('');
+	const [ url, setUrl ] = useState('');
+	const baseUrl = 'http://localhost:8084';
 
-	const fetchData = async () => {
-		const result = await fetch('http://localhost:8084/athlete');
-		const athletes = await result.json();
-		return setData(athletes);
-	};
-	useEffect(() => {
-		fetchData();
-	}, []);
-
-	const searchResults = (e) => {
-		setQuery(e.target.value);
-		console.log(query, 'Whatever');
-	};
-
-	const postData = () => {
+	const postDataSponsor = () => {
 		if (!year || !season || !sponsorName) {
 			setError(true);
 			setMessage('Please fill all the fields');
@@ -38,24 +27,27 @@ function App() {
 			.then((response) => response.json())
 			.then((data) => setData(data));
 
-    setSponsorName("")
-    setYear("")
-    setSeason("")
+		setSponsorName('');
+		setYear('');
+		setSeason('');
 	};
 
-	const handleSearch = () => {
-		const filteredAthletes = data.filter((item) => item.teamTeamName === query);
-		console.log(filteredAthletes, 'filtered Athletes');
-		setData(filteredAthletes);
-		setQuery('');
+	const postDataAthlete = () => {
+		const requestOptions = {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' }
+			// body: JSON.stringify({ sponsorName, year, season })
+		};
+		fetch(baseUrl + '/athlete/' + team, requestOptions)
+			.then((response) => response.json())
+			.then((data) => setData(data));
 	};
 
-	console.log(data, 'einai ta data mas');
 	return (
 		<div className="App">
-			<h3>Hello world!</h3>
-			<input type="text" onChange={searchResults} placeholder="Search By Team" />
-			<button onClick={handleSearch}>search</button>
+			<h3>Olympics App</h3>
+			<input type="text" onChange={(e) => setTeam(e.target.value)} placeholder="Search By Team" />
+			<button onClick={postDataAthlete}>search</button>
 			{data &&
 				data.map((item) => (
 					<div key={item.athleteId}>
@@ -74,7 +66,7 @@ function App() {
 				/>
 				<input type="text" onChange={(e) => setYear(e.target.value)} placeholder="Year" required />
 				<input type="text" onChange={(e) => setSeason(e.target.value)} placeholder="Season" required />
-				<button onClick={postData}>Send Request</button>
+				<button onClick={postDataSponsor}>Send Request</button>
 			</form>
 		</div>
 	);
