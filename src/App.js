@@ -1,154 +1,39 @@
 import './App.css';
-import { useEffect, useState } from 'react';
 import React from 'react';
+import AthleteByTeam from './components/AthleteByTeam';
+import SportByStadium from './components/SportByStadium';
+import SportBySponsor from './components/SportBySponsor';
+import 'bootstrap/dist/css/bootstrap.css';
+
 // import Paper from "@material-ui/core/Paper";
 // import Tab from "@material-ui/core/Tab";
 // import Tabs from "@material-ui/core/Tabs";
 
-
 function App() {
-	const [data1, setData1] = useState('');
-	const [data2, setData2] = useState('');
-	const [data3, setData3] = useState('');
-	const [query, setQuery] = useState('');
-	const [sponsor, setSponsor] = useState('');
-	const [year, setYear] = useState('');
-	const [season, setSeason] = useState('');
-	const [team, setTeam] = useState('');
-	const [error, setError] = useState(false);
-	const [message, setMessage] = useState('');
-	const [stadium, setStadium] = useState('');
-	const [date, setDate] = useState('');
-	const [url, setUrl] = useState('');
-	const baseUrl = 'http://localhost:8084';
-
-	// const [value, setValue] = React.useState(2);
-
-	const postDataAthlete = () => {
-		const requestOptions = {
-			method: 'GET',
-			headers: { 'Content-Type': 'application/json' }
-			// body: JSON.stringify({ sponsorName, year, season })
-		};
-		fetch(baseUrl + '/athlete/' + team, requestOptions)
-			.then((response) => response.json())
-			.then((data1) => setData1(data1));
-		// console.log(data,"pog EDW")
-	};
-
-
-	const postDataSportAtStadium = () => {
-		console.log("MPHKAME!")
-		if (!date || !stadium) {
-			setError(true);
-			setMessage('Please fill all the fields');
-		}
-		const requestOptions = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ stadium, date })
-		};
-		console.log(requestOptions, 'pogchamp edw')
-		fetch(baseUrl + '/sport/search/', requestOptions)
-			.then((response) => response.json())
-			.then((data2) => setData2(data2));
-		// console.log(data,'hello')
-	};
-
-
-	const postDataSponsor = () => {
-		if (!year || !season || !sponsor) {
-			setError(true);
-			setMessage('Please fill all the fields');
-		}
-		const requestOptions = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ sponsor, year, season })
-		};
-		fetch(baseUrl + '/sport/search-by-sponsor/', requestOptions)
-			.then((response) => response.json())
-			.then((data3) => setData3(data3));
-
-	};
-
-
 	return (
 		<div className="App">
-
-			<h3>Olympics App</h3>
-
-
-			<input type="text" onChange={(e) => setTeam(e.target.value)} placeholder="Search By Team" />
-			<button onClick={postDataAthlete}>search</button>
-			{data1 &&
-				data1.map((item) => (
-					<div key={item.athleteId}>
-						<div>
-							{item.athleteName} {item.teamTeamName}
-						</div>
-					</div>
-				))}
-			{error && <div style={{ color: 'red' }}>{message}</div>}
-
-
-
-			<form>
-				<input
-					type="text"
-					onChange={(e) => setStadium(e.target.value)}
-					placeholder="Stadium"
-					required
-				/>
-				<input
-					type="text"
-					onChange={(e) => setDate(e.target.value)}
-					placeholder="Date"
-					required
-				/>
-				<button type="button" onClick={postDataSportAtStadium}>Search for Sports</button>
-			</form>
-			{data2 &&
-				data2.map((item) => (
-					<div >
-						<div>
-							{item.sportName} {item.stadiumName}
-						</div>
-					</div>
-				))}
-
-
-
-			<form>
-				<input
-					type="text"
-					onChange={(e) => setSponsor(e.target.value)}
-					placeholder="Sponsor Name"
-					required
-				/>
-				<input
-					type="text"
-					onChange={(e) => setYear(e.target.value)}
-					placeholder="Year"
-					required
-				/>
-				<input
-					type="text"
-					onChange={(e) => setSeason(e.target.value)}
-					placeholder="Season"
-					required
-				/>
-				<button type="button" onClick={postDataSponsor}>Send Request</button>
-			</form>
-			{data3 &&
-				data3.map((item) => (
-					<div >
-						<div>
-							{item}
-						</div>
-					</div>
-				))}
-
+			<div class="row">
+				<div class="col-sm" />
+				<div class="col-sm">
+					<img src="https://logos-world.net/wp-content/uploads/2021/09/Olympics-Logo-2010-present.png" class="img-fluid" alt="Responsive image" />
+					<h1 class="border-bottom border-secondary">Olympics App</h1>
+				</div>
+				<div class="col-sm" />
+			</div>
+			<div class="row">
+				<div class="col-sm">
+					<AthleteByTeam />
+				</div>
+				<div class="col-sm">
+					<SportByStadium />
+				</div>
+				<div class="col-sm">
+					<SportBySponsor />
+				</div>
+			</div>
+			{/* <AthleteByTeam />
+			<SportByStadium />
+			<SportBySponsor /> */}
 
 			{/* <div
 				style={{
@@ -173,8 +58,6 @@ function App() {
 					<h3>TAB NO: {value} clicked!</h3>
 				</Paper>
 			</div> */}
-
-
 		</div>
 	);
 }
