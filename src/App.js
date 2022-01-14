@@ -3,6 +3,8 @@ import React from 'react';
 import AthleteByTeam from './components/AthleteByTeam';
 import SportByStadium from './components/SportByStadium';
 import SportBySponsor from './components/SportBySponsor';
+import Logo from './components/Logo';
+import Navbar from './components/Navbar';
 import 'bootstrap/dist/css/bootstrap.css';
 
 // import Paper from "@material-ui/core/Paper";
@@ -11,15 +13,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
 	return (
-		<div className="App">
-			<div class="row">
-				<div class="col-sm" />
-				<div class="col-sm">
-					<img src="https://logos-world.net/wp-content/uploads/2021/09/Olympics-Logo-2010-present.png" class="img-fluid" alt="Responsive image" />
-					<h1 class="border-bottom border-secondary">Olympics App</h1>
-				</div>
-				<div class="col-sm" />
-			</div>
+		<div className="App" style={{
+			width: '99%'
+		}}>
+			<Navbar />
+			<Logo />
 			<div class="row">
 				<div class="col-sm">
 					<AthleteByTeam />
