@@ -1,10 +1,14 @@
 import './App.css';
 import { useEffect, useState } from 'react';
+import React from 'react';
+import Paper from "@material-ui/core/Paper";
+import Tab from "@material-ui/core/Tab";
+import Tabs from "@material-ui/core/Tabs";
 
 function App() {
 	const [data, setData] = useState('');
 	const [query, setQuery] = useState('');
-	const [sponsorName, setSponsorName] = useState('');
+	const [sponsor, setSponsor] = useState('');
 	const [year, setYear] = useState('');
 	const [season, setSeason] = useState('');
 	const [team, setTeam] = useState('');
@@ -15,24 +19,7 @@ function App() {
 	const [url, setUrl] = useState('');
 	const baseUrl = 'http://localhost:8084';
 
-	const postDataSponsor = () => {
-		if (!year || !season || !sponsorName) {
-			setError(true);
-			setMessage('Please fill all the fields');
-		}
-		const requestOptions = {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ sponsorName, year, season })
-		};
-		fetch('https://reqres.in/api/posts', requestOptions)
-			.then((response) => response.json())
-			.then((data) => setData(data));
-
-		setSponsorName('');
-		setYear('');
-		setSeason('');
-	};
+	const [value, setValue] = React.useState(2);
 
 	const postDataAthlete = () => {
 		const requestOptions = {
@@ -43,24 +30,44 @@ function App() {
 		fetch(baseUrl + '/athlete/' + team, requestOptions)
 			.then((response) => response.json())
 			.then((data) => setData(data));
+		// console.log(data,"pog EDW")
 	};
 
-	const postDataSportAtStadium = () => {
-		if (!date || !stadium ) {
+	const postDataSponsor = () => {
+		if (!year || !season || !sponsor) {
 			setError(true);
 			setMessage('Please fill all the fields');
 		}
 		const requestOptions = {
-			method: 'GET',
+			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			//body: JSON.stringify({ stadium, date})
+			body: JSON.stringify({ sponsor, year, season })
 		};
-		fetch(baseUrl + '/sport/search' , requestOptions)
+		fetch(baseUrl + '/sport/search-by-sponsor/', requestOptions)
 			.then((response) => response.json())
 			.then((data) => setData(data));
-			console.log(data,"TELOS EDW")
+
 	};
-	
+
+
+	const postDataSportAtStadium = () => {
+		console.log("MPHKAME!")
+		if (!date || !stadium) {
+			setError(true);
+			setMessage('Please fill all the fields');
+		}
+		const requestOptions = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ stadium, date })
+		};
+		console.log(requestOptions, 'pogchamp edw')
+		fetch(baseUrl + '/sport/search/', requestOptions)
+			.then((response) => response.json())
+			.then((data) => setData(data));
+		// console.log(data,'hello')
+	};
+
 
 
 	return (
@@ -82,10 +89,37 @@ function App() {
 			{error && <div style={{ color: 'red' }}>{message}</div>}
 
 
+
 			<form>
 				<input
 					type="text"
-					onChange={(e) => setSponsorName(e.target.value)}
+					onChange={(e) => setStadium(e.target.value)}
+					placeholder="Stadium"
+					required
+				/>
+				<input
+					type="text"
+					onChange={(e) => setDate(e.target.value)}
+					placeholder="Date"
+					required
+				/>
+				<button type="button" onClick={postDataSportAtStadium}>Search for Sports</button>
+			</form>
+			{data &&
+				data.map((item) => (
+					<div >
+						<div>
+							{item.sportName} {item.stadiumName}
+						</div>
+					</div>
+				))}
+
+
+
+			<form>
+				<input
+					type="text"
+					onChange={(e) => setSponsor(e.target.value)}
 					placeholder="Sponsor Name"
 					required
 				/>
@@ -101,32 +135,42 @@ function App() {
 					placeholder="Season"
 					required
 				/>
-				<button onClick={postDataSponsor}>Send Request</button>
-			</form>
-
-			<form>
-				<input
-					type="text"
-					onChange={(e) => setStadium(e.target.value)}
-					placeholder="Stadium"
-					required
-				/>
-				<input
-					type="text"
-					onChange={(e) => setDate(e.target.value)}
-					placeholder="Date"
-					required
-				/>
-				<button onClick={postDataSportAtStadium}>Search for Sports</button>
+				<button type="button" onClick={postDataSponsor}>Send Request</button>
 			</form>
 			{data &&
 				data.map((item) => (
 					<div >
 						<div>
-							{item.sportName} {item.stadiumName}
+							{item}
 						</div>
 					</div>
 				))}
+
+
+			<div
+				style={{
+					marginLeft: "5%",
+				}}
+			>
+				<h2>Here are some tabs</h2>
+				<Paper square elevation={24} >
+					<Tabs
+						value={value}
+						textColor="primary"
+						indicatorColor="primary"
+						onChange={(event, newValue) => {
+							setValue(newValue);
+						}}
+					>
+						<Tab label="Active TAB One" />
+						<Tab label="Active TAB Two" />
+						<Tab label="Disabled TAB!" disabled />
+						<Tab label="Active Tab Three" />
+					</Tabs>
+					<h3>TAB NO: {value} clicked!</h3>
+				</Paper>
+			</div>
+
 		</div>
 	);
 }
