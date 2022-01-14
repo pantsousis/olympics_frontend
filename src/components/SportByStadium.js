@@ -58,67 +58,53 @@ function SportByStadium() {
 	return (
 		<div>
 			<div>
-			<h5>Search Sport by Stadium and Date</h5>
-			<div class="container">
-				<form>
-					<div class="form-group">
-						<label for="Stadium">Sponsor Name</label>
-						<input
-							type="text"
-							class="form-control"
-							id="Stadium"
-							aria-describedby="emailHelp"
-							placeholder="Stadium"
-							onChange={(e) => setStadium(e.target.value)}
-							required
-						/>
-						<small id="emailHelp" class="form-text text-muted">
-							Try "Toumpa"
-						</small>
-					</div>
-					<div class="form-group">
-						<label for="Date">Sport Date</label>
-						<input
-							type="text"
-							class="form-control"
-							id="Date"
-							placeholder="Sport Date"
-							onChange={(e) => setDate(e.target.value)}
-							required
-						/>
-						<small id="emailHelp" class="form-text text-muted">
-							Try "2000-06-06"
-						</small>
-					</div>
-					<button type="button" class="btn btn-primary" onClick={postDataSportAtStadium}>
-						Submit
-					</button>
-				</form>
-				<ul class="list-group">
-					{data2 && data2.map((item) => <li class="list-group-item">Sport: {item.sportName} - Stadium: {item.stadiumName}</li>)}
-					{error && <div style={{ color: 'red' }}>{message}</div>}
-				</ul>
-			</div>  
-		</div>
-
-
-			{/* <h5>Search Sport by Stadium and Date</h5>
-			<form>
-				<input type="text" onChange={(e) => setStadium(e.target.value)} placeholder="Stadium" required />
-				<input type="text" onChange={(e) => setDate(e.target.value)} placeholder="Date (yyyy-mm-dd)" required />
-			</form>
-			<button type="button" onClick={postDataSportAtStadium}>
-					Search for Sports
-				</button>
-			{data2 &&
-				data2.map((item) => (
-					<div>
-						<div>
-							{item.sportName} {item.stadiumName}
+				<h5>Search Sport by Stadium and Date</h5>
+				<div class="container">
+					<form>
+						<div class="form-group">
+							<label for="Stadium">Sponsor Name</label>
+							<input
+								type="text"
+								class="form-control"
+								id="Stadium"
+								aria-describedby="emailHelp"
+								placeholder="Stadium"
+								onChange={(e) => setStadium(e.target.value)}
+								required
+							/>
+							<small id="emailHelp" class="form-text text-muted">
+								Try "Toumpa"
+							</small>
 						</div>
-					</div>
-				))}
-			{error && <div style={{ color: 'red' }}>{message}</div>} */}
+						<div class="form-group">
+							<label for="Date">Sport Date</label>
+							<input
+								type="text"
+								class="form-control"
+								id="Date"
+								placeholder="Sport Date"
+								onChange={(e) => setDate(e.target.value)}
+								required
+							/>
+							<small id="emailHelp" class="form-text text-muted">
+								Try "2000-06-06"
+							</small>
+						</div>
+						<button type="button" class="btn btn-primary" onClick={postDataSportAtStadium}>
+							Submit
+						</button>
+					</form>
+					<ul class="list-group">
+						{data2 &&
+							data2.map((item) => (
+								<li class="list-group-item">
+									Sport: {item.sportName} - Stadium: {item.stadiumName}
+								</li>
+							))}
+						{error && <div style={{ color: 'red' }}>{message}</div>}
+					</ul>
+				</div>
+			</div>
 		</div>
 	);
 }

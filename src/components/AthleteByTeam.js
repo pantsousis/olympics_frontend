@@ -59,21 +59,6 @@ function AthleteByTeam() {
 					</ul>
 				</div>
 			</div>
-
-			{/* <h5>Search Athletes by teams</h5>
-            <form>
-			    <input type="text" onChange={(e) => setTeam(e.target.value)} placeholder="Search By Team" />
-            </form>
-			<button onClick={postDataAthlete}>search</button>
-			{data1 &&
-				data1.map((item) => (
-					<div key={item.athleteId}>
-						<div>
-							{item.athleteName} {item.teamTeamName}
-						</div>
-					</div>
-				))}
-			{error && <div style={{ color: 'red' }}>{message}</div>} */}
 		</div>
 	);
 }
